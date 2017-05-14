@@ -1,0 +1,5 @@
+#r "C:\Projects\RxPresentation\DictionaryLookup2\bin\Debug\System.Reactive.Core.dll"
+#r "C:\Projects\RxPresentation\DictionaryLookup2\bin\Debug\System.Reactive.Interfaces.dll"
+#r "C:\Projects\RxPresentation\DictionaryLookup2\bin\Debug\System.Reactive.Linq.dll"
+#r "C:\Projects\RxPresentation\DictionaryLookup2\bin\Debug\System.Reactive.PlatformServices.dll"
+#r "C:\Projects\RxPresentation\DictionaryLookup2\bin\Debug\System.Reactive.Windows.Threading.dll"

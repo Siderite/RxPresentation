@@ -1,0 +1,9 @@
+As a word fanatic I need to get the list of words that start with a word of my choice.
+
+The service we use is: http://services.aonaware.com/DictService/DictService.asmx
+
+The software must:
+- throttle the filter word as I type
+- handle any errors and show me what went wrong
+- use as little bandwidth as possible (call the service as little as possible)
+- be responsive (consider timeouts and slow service responses and network errors)

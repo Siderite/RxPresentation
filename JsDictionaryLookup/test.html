@@ -1,0 +1,59 @@
+<html>
+<head>
+	<script src="RxJS-master/dist/rx.all.js"></script>
+	<script src="res/jquery-3.0.0-beta1.min.js"></script>
+</head>
+<input id="tboxFilter" type="text" style="width:50%; margin:10px;" autofocus /><br/>
+<select id="lboxWords" size=30 style="width:100%; margin:10px;" />
+<script>
+  var changes = Rx.Observable.fromEvent($('#tboxFilter'), 'keyup')
+	.debounce(500)
+    .map(function (e) { return e.target.value; })
+    .distinctUntilChanged();
+
+  var res=changes
+	.selectMany(function(t) {
+		return Rx.Observable.fromPromise(
+			$.ajax({
+	      url: 'http://en.wikipedia.org/w/api.php2',
+    	  dataType: 'jsonp',
+	      data: {
+    	    action: 'opensearch',
+	        format: 'json',
+    	    search: t
+	      }
+    	}).promise())
+		.timeout(400)
+		.retry(3)
+		.catch(function(err) {
+			return Rx.Observable.return([null,['web call error: '+err]]);
+		});
+	})
+	.map(function(data) {
+		return data[1];
+	});
+
+
+res.subscribe(function(words) {
+				displayResult(words);
+			},function(err) {
+				displayResult('Fatal error:'+err);
+			});
+
+var lboxWords=$('#lboxWords');
+
+function displayResult(words) {
+	if (!words) {
+		words=['No result'];
+	}
+	else {
+		if (!words.length) words=[words];
+	}
+	lboxWords.empty();
+	$.each(words, function() {
+    	lboxWords.append($("<option />").text(this));
+	});
+}
+
+</script>
+</html>
